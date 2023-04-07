@@ -1,58 +1,31 @@
+
+
+
 <%- include('layouts/header'); -%>
-<body>
-    <%- include('layouts/nav'); -%>
+<%- include('layouts/nav'); -%>
+<body>  
+
+  <section class="home" id="home">
+
+ 
+
+</section>
  <section class="w50">
   <div class="formData">
-    <% 
-      if(typeof(total) != 'undefined')
-      {
-    %>
-        <p id="formResult">Order Updated Successfully...!:</p>
+    
+        <p> Destinations Updated Successfully...!:</p>
     <table>
       <tr>
         <th>Name:</th>
-        <td> <%= name %> </td>
+        <td> <%= des_name %> </td>
       </tr>
       <tr>
-        <th>Email:</th>
-        <td> <%= email %> </td>
+        <th>Price:</th>
+        <td> <%= des_price %> </td>
       </tr>
-      <tr>
-        <th>Phone:</th>
-        <td> <%= phone %> </td>
-      </tr>
-      <tr>
-        <th>Post Code:</th>
-        <td> <%= postcode %> </td>
-      </tr>
-      <tr>
-        <th>Lunch:</th>
-        <td> <%= lunch %> </td>
-      </tr>
-      <tr>
-        <th>Tickets:</th>
-        <td> <%= tickets %> </td>
-      </tr>
-      <tr>
-        <th>Campus:</th>
-        <td> <%= campus %> </td>
-      </tr>
-      <tr>
-        <th>Sub Total:</th>
-        <td>$<%= subTotal.toFixed(2) %> </td>
-      </tr>
-      <tr>
-        <th>Tax:</th>
-        <td> $<%= tax.toFixed(2) %> </td>
-      </tr>
-      <tr>
-        <th>Total:</th>
-        <td> $<%= total.toFixed(2) %> </td>
-      </tr>
+      
     </table>
-    <%
-      }
-    %>
+    
   </div>
 </section>
 <div class="clear"></div>

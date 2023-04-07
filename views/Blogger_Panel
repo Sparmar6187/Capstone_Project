@@ -5,10 +5,11 @@
 <section class="home" id="home">
 
     <div class="content">
-        <h3>Travelling is a Therapy</h3>
-        <span> Natural & Beautiful Places </span>
+        <h3>Blogger Panel</h3>
+        <span>  </span>
         <p></p>
-        <a href="/traveller_details" class="btn">What are your interests?</a>
+        <a href="/add_destinations" class="btn">Add Destinations</a>
+        <a href="/update_data" class="btn">Edit Destinations</a>
     </div>
 
 </section>
@@ -25,7 +26,7 @@
 
         <div class="video-container">
             <video src="css/images/about-vid.mp4" loop autoplay muted></video>
-            <h3>London</h3>
+            <h3>Best Places</h3>
         </div>
 
         <div class="content">
@@ -116,7 +117,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Maldives</h3>
+                <h3>Best Place</h3>
                 <div class="price">  $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -132,7 +133,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Sweden</h3>
+                <h3>Best Place</h3>
                 <div class="price">  $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -148,7 +149,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Singapore</h3>
+                <h3>Best Place</h3>
                 <div class="price"> $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -164,7 +165,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>India</h3>
+                <h3>Best Place</h3>
                 <div class="price"> $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -180,7 +181,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Italy</h3>
+                <h3>Best Place</h3>
                 <div class="price"> $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -196,7 +197,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Bali</h3>
+                <h3>Best Place</h3>
                 <div class="price"> $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -212,7 +213,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Dubai</h3>
+                <h3>Best Place</h3>
                 <div class="price"> $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -228,7 +229,7 @@
                 </div>
             </div>
             <div class="content">
-                <h3>Paris</h3>
+                <h3>Best Place</h3>
                 <div class="price"> $95.75 <span>$125.75</span> </div>
             </div>
         </div>
@@ -259,7 +260,7 @@
         <div class="user">
             <img src="css/images/pic-1.jpg" alt="">
             <div class="user-info">
-                <h3>Shreya</h3>
+                <h3>Niru</h3>
                 <span>happy customer</span>
             </div>
         </div>
@@ -278,7 +279,7 @@
         <div class="user">
             <img src="css/images/pic-2.png" alt="">
             <div class="user-info">
-                <h3>Chilsi</h3>
+                <h3>Niru</h3>
                 <span>happy customer</span>
             </div>
         </div>
@@ -297,7 +298,7 @@
         <div class="user">
             <img src="css/images/pic-3.jpg" alt="">
             <div class="user-info">
-                <h3>Neha</h3>
+                <h3>Niru</h3>
                 <span>happy customer</span>
             </div>
         </div>

@@ -1,25 +1,34 @@
 <%- include('layouts/header'); -%>
 <%- include('layouts/nav'); -%>
 <body>
+  
+
+
+
 <!-- review  ends -->
 
 <!-- contact  starts  -->
 
 <section class="contact" id="contact">
 
-    <h1 class="heading"> <span>  </span> Login </h1>
+    <h1 class="heading"> <span> User  </span> Review </h1>
 
-    <div class="row">
+    <div class="row">        
 
         <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" >
             
-            <input id="name" placeholder="Username" type="text" name="username" class="box"><br/>
-         
-            <input id="password" placeholder="password" type="text" name="password" class="box"><br/>
+            <input id="name" placeholder="First Last" type="text" name="name" class="box"><br/>
 
-            <input type="submit" value="Login" class="btn">
-            <input type="submit" value="Register" class="btn">
+            
+            <input id="email" placeholder="email@domain.com" type="text" name="email" class="box"><br/>
 
+        
+            <input id="phone" placeholder="123-123-1234" type="phone" name="phone" class="box"><br/>
+
+            
+            <input id="interest" placeholder="reviews and feedback" type="text" name="interest" class="box"><br/>
+
+            <input type="submit" value="Submit" class="btn">
       <p id="errors"></p>
     </form>  
     <% 
@@ -96,7 +105,7 @@
 
     </div>
 
-    <div class="credit">| created by <span> G.Niruthian </span> | all rights reserved |</div>
+    <div class="credit">| created by <span> Adventure Artifacts  </span> | all rights reserved |</div>
 
 </section>
 

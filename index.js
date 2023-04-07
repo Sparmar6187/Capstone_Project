@@ -20,7 +20,18 @@ const Order = mongoose.model('Travellers',{
     interest : String
 });
 
+// Setup Database Model
+const destination = mongoose.model('Destinations',{
+    des_name : String, 
+    des_price : String
+});
+
 const Admin = mongoose.model('Admin', {
+    username: String,
+    password: String
+});
+
+const Blogger = mongoose.model('Blogger', {
     username: String,
     password: String
 });
@@ -95,12 +106,25 @@ myApp.get('/traveller_details', function(req, res) {
     res.render('traveller_details');
 });
 
+myApp.get('/add_destinations', function(req, res) {
+    res.render('add_destinations');
+});
+
+myApp.get('/user_review', function(req, res) {
+    res.render('user_review');
+});
+
+myApp.get('/travel', function(req, res) {
+    res.render('travel');
+});
+
+myApp.get('/transport', function(req, res) {
+    res.render('transport');
+});
+
 // Handle form submission
-myApp.post('/traveller_details', [
-    check ('name', 'Name is required!').notEmpty(),
-    check ('email', 'Please enter a valid email address!').isEmail(),
-    check ('phone', '').custom(customPhoneValidation),
-    // check ('lunch').custom(customLunchAndTicketValidations)
+myApp.post('/add_destinations', [
+    check ('des_name', 'Name is required!').notEmpty(),
 ],function(req, res){
 
     const errors = validationResult(req);
@@ -108,59 +132,71 @@ myApp.post('/traveller_details', [
 
     if (!errors.isEmpty())
     {
-        res.render('traveller_details', {errors : errors.array()});
+        res.render('add_destinations', {errors : errors.array()});
     }
 
     else 
     {
 		// No errors
-        var name = req.body.name;
-        var email = req.body.email;
-        var phone = req.body.phone;
-        var interest = req.body.interest;
+        var des_name = req.body.des_name;
+        var des_price = req.body.des_price;
         
         var pageData = {
-            name : name, 
-            email : email,
-            phone : phone,
-            interest : interest,
+            des_name : des_name, 
+            des_price : des_price,
+            
         };
 
         // Save the form data into Database
-        var myOrder = new Order(pageData);
-        myOrder.save().then(function() {
-            console.log("Traveller details added!");
-            res.redirect('/traveller_details');
+        var new_des = new destination(pageData);
+        new_des.save().then(function() {
+            console.log("Destination details added!");
+            res.redirect('/edit_destinations');
         }).catch(function (x) {
             console.log(`Error: ${x}`);
-            res.render('traveller_details', {errors: [{msg: 'An error occurred while saving the form data.'}]});
+            res.render('add_destinations', {errors: [{msg: 'An error occurred while saving the form data.'}]});
         });
     }
 });
 
-
-// All Orders Page
-myApp.get('/allorders', function(req, res){
+myApp.get('/update_data', function(req, res){
     // If session exists, then access All Orders Page.
     if (req.session.userLoggedIn)
     {
         // Read documents from MongoDb
-        Order.find({}).exec(function (err, ordersValue){
+        destination.find({}).exec(function (err, ordersValue){
             console.log(`Error: ${err}`);
             console.log(`Orders Value:: ${ordersValue}`);
-            res.render('allorders', {ordersKey: ordersValue}); // No need to add .ejs extension to the command.
+            res.render('update_data', {ordersKey: ordersValue}); // No need to add .ejs extension to the command.
         })
     }
     // Otherwise redirect user to login page.
     else
-        res.redirect('/login');
+        res.redirect('/admin_panel');
     
+});
+
+
+
+// Login Page
+myApp.get('/admin_panel', function(req, res) {
+    res.render('admin_panel');
+});
+
+myApp.get('/Blogger_Panel', function(req, res) {
+    res.render('Blogger_Panel');
 });
 
 // Login Page
 myApp.get('/login', function(req, res) {
     res.render('login');
 });
+
+// Blogger Login Page
+myApp.get('/Blogger_Login', function(req, res) {
+    res.render('Blogger_Login');
+});
+
 
 // Login Page
 myApp.post('/login', function(req,res) {
@@ -176,7 +212,7 @@ myApp.post('/login', function(req,res) {
         {
             req.session.username = admin.username;
             req.session.userLoggedIn = true;
-            res.redirect('/allorders');
+            res.redirect('/admin_panel');
         }
         else
         {
@@ -186,6 +222,30 @@ myApp.post('/login', function(req,res) {
 
 });
 
+myApp.post('/Blogger_Login', function(req,res) {
+    var user = req.body.username;
+    var pass = req.body.password;
+    console.log(`Username is: ${user}`);
+    console.log(`Password is: ${pass}`);
+
+    Blogger.findOne({username:user, password: pass}).exec(function(err, blogger) {
+        console.log(`Error is: ${err}`);
+        console.log(`Admin is: ${blogger}`);
+        if (blogger)
+        {
+            req.session.username = blogger.username;
+            req.session.userLoggedIn = true;
+            res.redirect('/Blogger_Panel');
+        }
+        else
+        {
+            res.render('Blogger_Login', {error: "Sorry login failed. Please try again!"});
+        }
+    });
+
+});
+
+
 // Logout Page
 myApp.get('/logout', (req,res) => {
     // Remove Stored Session and redirect user to login page.
@@ -194,30 +254,6 @@ myApp.get('/logout', (req,res) => {
     res.render('login', {error: 'Successfully logged out!'});
 });
 
-// Delete Page
-// after /delete, whatever comes after : is consider as a variable (parameter).
-// variable name can be anything.
-myApp.get('/delete/:id', (req,res) => {
-    // Check if session exists.
-    if (req.session.userLoggedIn)
-    {
-        // Delete record from MongoDb.
-        var id = req.params.id;
-        //Order.collection.deleteOne(id);
-        console.log(`Deleted Object Id: ${id}`);
-        Order.findByIdAndDelete({_id : id}).exec(function(err, order) {
-            console.log(`Error: ${err}`);
-            console.log(`Order: ${order}`);
-            if (order)
-                res.render('delete', {message: "Deleted Successfully...!"});
-            else
-                res.render('delete', {message: "Sorry, Record Not Deleted...!"});
-        });
-    }
-    // Otherwise redirect user to login page.
-    else
-        res.redirect('/login');
-});
 
 // Edit/Update Page
 myApp.get('/edit/:id', (req,res) => {
@@ -227,98 +263,63 @@ myApp.get('/edit/:id', (req,res) => {
         // Read object from MongoDb to Edit.
         var id = req.params.id;
         console.log(`Object Id: ${id}`);
-        Order.findById({_id : id}).exec(function(err, order) {
+        destination.findById({_id : id}).exec(function(err, order) {
             console.log(`Error: ${err}`);
             console.log(`Order: ${order}`);
             if (order)
                 res.render('edit', {order : order});
             else
-                res.send ('No order found with this id....!');
+                res.send ('No data found with this id....!');
         });
     }
     // Otherwise redirect user to login page.
     else
-        res.redirect('/login');
+        res.redirect('/admin_panel');
 });
-/* 
+
 // Edit Page - Post Method
-myApp.post('/edit/:id', [
-    check ('name', 'Name is required!').notEmpty(),
-    check ('email', 'Please enter a valid email address!').isEmail(),
-    check ('phone', '').custom(customPhoneValidation),
-    check ('lunch').custom(customLunchAndTicketValidations)
-],function(req, res){
+myApp.post('/edit/:id', [], function(req, res) {
     // check for errors
     const errors = validationResult(req);
     console.log(errors);
 
-    if (!errors.isEmpty())
-    {
+    if (!errors.isEmpty()) {
         // Edit and display errors if any.
         var id = req.params.id;
         console.log(`Object Id: ${id}`);
-        Order.findById({_id : id}).exec(function(err, order) {
+        destination.findById({ _id : id }).exec(function(err, dest) {
             console.log(`Error: ${err}`);
-            console.log(`Order: ${order}`);
-            if (order)
-                res.render('edit', {order : order, errors : errors.array()});
+            console.log(`Destination: ${dest}`);
+            if (dest)
+                res.render('edit', { destination: dest, errors: errors.array() });
             else
-                res.send ('No order found with this id....!');
+                res.send('No destination found with this id....!');
         });
-    }
-    else 
-    {
-		// No errors
-        var name = req.body.name;
-        var email = req.body.email;
-        var phone = req.body.phone;
-        var postcode = req.body.postcode;
-        var lunch = req.body.lunch;
-        var tickets = req.body.tickets;
-        var campus = req.body.campus;
-
-        var subTotal = tickets * 20;
-        if (lunch == 'yes')
-        { subTotal += 15; }
-
-        var tax = subTotal * 0.13;
-        var total = subTotal + tax;
-
+    } else {
+        var des_name = req.body.des_name;
+        var des_price = req.body.des_price;
+        
         var pageData = {
-            name : name, 
-            email : email,
-            phone : phone,
-            postcode : postcode,
-            lunch : lunch,
-            tickets : tickets,
-            campus : campus,
-            subTotal : subTotal,
-            tax : tax,
-            total : total
-        }
-    };
+            des_name : des_name, 
+            des_price : des_price,
+        };
 
-    // Update MongDb with Existing (Modified) Data. 
-    var id  = req.params.id;
-    Order.findByIdAndUpdate({_id : id}).exec(function(err, order) {
-        order.name = name, 
-        order.email = email,
-        order.phone = phone,
-        order.postcode = postcode,
-        order.lunch = lunch,
-        order.tickets = tickets,
-        order.campus = campus,
-        order.subTotal = subTotal,
-        order.tax = tax,
-        order.total = total
-        order.save();
-    });
 
-    // Display the output: Updated Information
-    res.render('editsuccess', pageData); // no need to add .ejs extension to the command.
-}); */
+        // Update MongDb with Existing (Modified) Data. 
+        var id = req.params.id;
+        destination.findByIdAndUpdate({ _id: id }).exec(function(err, dest) {
+            dest.des_name = des_name; 
+            dest.des_price = des_price;
+    
+            dest.save();
+        });
 
-// Author Page
+        // Display the output: Updated Information
+        res.render('editsuccess', pageData); 
+    }
+});
+
+
 myApp.get('/author', function(req, res){
     res.render('author', {
         studentName: "admin",
