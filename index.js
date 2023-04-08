@@ -228,7 +228,7 @@ myApp.post('/login', function(req,res) {
 
 });
 
-myApp.post('/Blogger_Login', function(req,res) {
+/* myApp.post('/Blogger_Login', function(req,res) {
     var user = req.body.username;
     var pass = req.body.password;
     console.log(`Username is: ${user}`);
@@ -250,7 +250,7 @@ myApp.post('/Blogger_Login', function(req,res) {
     });
 
 });
-
+ */
 
 // Logout Page
 myApp.get('/logout', (req,res) => {
