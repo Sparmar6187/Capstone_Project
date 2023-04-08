@@ -106,6 +106,10 @@ myApp.get('/traveller_details', function(req, res) {
     res.render('traveller_details');
 });
 
+myApp.get('/Blogger_registration', function(req, res) {
+    res.render('Blogger_registration');
+});
+
 myApp.get('/add_destinations', function(req, res) {
     res.render('add_destinations');
 });
@@ -128,6 +132,45 @@ myApp.get('/edit', function(req, res) {
 
 // Handle form submission
 myApp.post('/add_destinations', [
+    check ('des_name', 'Name is required!').notEmpty(),
+],function(req, res){
+
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty())
+    {
+        res.render('add_destinations', {errors : errors.array()});
+    }
+
+    else 
+    {
+		// No errors
+        var des_name = req.body.des_name;
+        var des_price = req.body.des_price;
+        
+        var pageData = {
+            des_name : des_name, 
+            des_price : des_price,
+            
+        };
+
+        // Save the form data into Database
+        var new_des = new destination(pageData);
+        new_des.save().then(function() {        
+            console.log("Destination details added!");
+            res.render('editsuccess', pageData); 
+            
+            
+        }).catch(function (x) {
+            console.log(`Error: ${x}`);
+            res.render('add_destinations', {errors: [{msg: 'An error occurred while saving the form data.'}]});
+        });
+    }
+});
+
+// Handle blogger registartion form submission
+myApp.post('/Blogger_registration', [
     check ('des_name', 'Name is required!').notEmpty(),
 ],function(req, res){
 
@@ -201,6 +244,11 @@ myApp.get('/login', function(req, res) {
 // Blogger Login Page
 myApp.get('/Blogger_Login', function(req, res) {
     res.render('Blogger_Login');
+});
+
+// Blogger Login Page
+myApp.get('/Blogger_registration', function(req, res) {
+    res.render('Blogger_registration');
 });
 
 
