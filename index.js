@@ -122,6 +122,10 @@ myApp.get('/transport', function(req, res) {
     res.render('transport');
 });
 
+myApp.get('/edit', function(req, res) {
+    res.render('edit');
+});
+
 // Handle form submission
 myApp.post('/add_destinations', [
     check ('des_name', 'Name is required!').notEmpty(),
@@ -149,9 +153,11 @@ myApp.post('/add_destinations', [
 
         // Save the form data into Database
         var new_des = new destination(pageData);
-        new_des.save().then(function() {
+        new_des.save().then(function() {        
             console.log("Destination details added!");
-            res.redirect('/edit_destinations');
+            res.render('editsuccess', pageData); 
+            
+            
         }).catch(function (x) {
             console.log(`Error: ${x}`);
             res.render('add_destinations', {errors: [{msg: 'An error occurred while saving the form data.'}]});

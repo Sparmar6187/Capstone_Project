@@ -35,6 +35,15 @@
       }
     }
      %> 
+
+     <!-- add_destinations.ejs -->
+
+<% if (typeof success_msg !== 'undefined') { %>
+    <div class="alert alert-success">
+        <%= success_msg %>
+    </div>
+<% } %>
+
         <!-- <div class="image">
             <img src="css/images/contact-img.svg" alt="">
         </div> -->
