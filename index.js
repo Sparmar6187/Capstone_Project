@@ -130,6 +130,15 @@ myApp.get('/edit', function(req, res) {
     res.render('edit');
 });
 
+myApp.get('/flights', function(req, res) {
+    res.render('flights');
+});
+
+myApp.get('/hotels', function(req, res) {
+    res.render('hotels');
+});
+
+
 // Handle form submission
 myApp.post('/add_destinations', [
     check ('des_name', 'Name is required!').notEmpty(),

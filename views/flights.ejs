@@ -1,82 +1,22 @@
 <%- include('layouts/header'); -%>
 <%- include('layouts/nav'); -%>
 <body>
-  
+
 <!-- review  ends -->
 
 <!-- contact  starts  -->
 
 
 
-<section class="contact" id="contact">
-
-    <h1 class="heading"> <span> Traveller </span> Details </h1>
-
-    <div class="row">
-
-       
-    <% 
-    if (typeof(errors) != 'undefined')
-    {
-      for (let error of errors)
-      {
-    %>
-
-        <p class="errors"> <%= error.msg %><br></p>
-    <%
-      }
-    }
-     %> 
-        <!-- <div class="image">
-            <img src="css/images/contact-img.svg" alt="">
-        </div> -->
-
-    </div>
-
-</section>
+  <div class="content">
+      <h3>Travelling is a Therapy</h3>
+      <span> Natural & Beautiful Places </span>
+      <p></p>
+      <a href="/traveller_details" class="btn">What are your interests?</a>
+  </div>
 
 
-<section class="contact" id="contact">
-
-    <h1 class="heading"> <span> User  </span> Review </h1>
-
-    <div class="row">        
-
-        <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" >
-            
-            <input id="name" placeholder="First Last" type="text" name="name" class="box"><br/>
-
-            
-            <input id="email" placeholder="email@domain.com" type="text" name="email" class="box"><br/>
-
-        
-            <input id="phone" placeholder="123-123-1234" type="phone" name="phone" class="box"><br/>
-
-            
-            <input id="interest" placeholder="reviews and feedback" type="text" name="interest" class="box"><br/>
-
-            <input type="submit" value="Submit" class="btn">
-      <p id="errors"></p>
-    </form>  
-    <% 
-    if (typeof(errors) != 'undefined')
-    {
-      for (let error of errors)
-      {
-    %>
-
-        <p class="errors"> <%= error.msg %><br></p>
-    <%
-      }
-    }
-     %> 
-        <!-- <div class="image">
-            <img src="css/images/contact-img.svg" alt="">
-        </div> -->
-
-    </div>
-
-</section>
+  <iframe src="https://www.cheapoair.ca/booknow/flights/airline-tickets?fpaffiliate=coaca-en-bing-d-competitor&fpsub=&utm_campaign=Competitors_Exact_ATLAS&utm_term=trivago%20flights&utm_source={bing}&utm_medium={cpc}&device=c&fpprice=&msclkid=8d4803d415fd16d813de67e76ccb8f67" width="1500" height="1000"></iframe>
 
 
 
@@ -140,3 +80,6 @@
 
 </body>
 </html>
+
+
+
