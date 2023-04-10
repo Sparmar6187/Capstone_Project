@@ -285,6 +285,17 @@ myApp.post('/user_review', [
     }
 });
 
+myApp.get('/view_reviews', function(req, res){
+    // If session exists, then access All Orders Page.
+    // Read documents from MongoDb
+    Review.find({}).exec(function (err, reviewsValue){
+        console.log(`Error: ${err}`);
+        console.log(`Reviews Value:: ${reviewsValue}`);
+        res.render('view_reviews', {ordersKey: reviewsValue}); // No need to add .ejs extension to the command.
+    });
+    // Otherwise redirect user to login page.
+});
+
 
 // Handle form submission
 myApp.post('/add_destinations', [
