@@ -310,6 +310,61 @@ myApp.get('/logout', (req,res) => {
     res.render('login', {error: 'Successfully logged out!'});
 });
 
+myApp.get('/destinations', function(req, res){
+    // If session exists, then access All Orders Page.
+    
+        // Read documents from MongoDb
+        destination.find({}).exec(function (err, ordersValue){
+            console.log(`Error: ${err}`);
+            console.log(`Orders Value:: ${ordersValue}`);
+            res.render('destinations', {ordersKey: ordersValue}); // No need to add .ejs extension to the command.
+        })
+    
+});
+
+// Edit Page - Post Method
+myApp.post('/destinations/:id', [], function(req, res) {
+    // check for errors
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty()) {
+        // Edit and display errors if any.
+        var id = req.params.id;
+        console.log(`Object Id: ${id}`);
+        destination.findById({ _id : id }).exec(function(err, dest) {
+            console.log(`Error: ${err}`);
+            console.log(`Destination: ${dest}`);
+            if (dest)
+                res.render('destinations', { destination: dest, errors: errors.array() });
+            else
+                res.send('No destination found with this id....!');
+        });
+    } else {
+        var des_name = req.body.des_name;
+        var des_price = req.body.des_price;
+        
+        var pageData = {
+            des_name : des_name, 
+            des_price : des_price,
+        };
+
+
+        // Update MongDb with Existing (Modified) Data. 
+        var id = req.params.id;
+        destination.findByIdAndUpdate({ _id: id }).exec(function(err, dest) {
+            dest.des_name = des_name; 
+            dest.des_price = des_price;
+    
+            dest.save();
+        });
+
+        // Display the output: Updated Information
+        res.render('editsuccess', pageData); 
+    }
+});
+
+
 
 // Edit/Update Page
 myApp.get('/edit/:id', (req,res) => {
@@ -332,6 +387,8 @@ myApp.get('/edit/:id', (req,res) => {
     else
         res.redirect('/admin_panel');
 });
+
+
 
 // Edit Page - Post Method
 myApp.post('/edit/:id', [], function(req, res) {
