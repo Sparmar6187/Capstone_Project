@@ -32,6 +32,7 @@ const Admin = mongoose.model('Admin', {
 });
 
 const Blogger = mongoose.model('Blogger', {
+    name:String,
     username: String,
     password: String
 });
@@ -136,6 +137,101 @@ myApp.get('/flights', function(req, res) {
 
 myApp.get('/hotels', function(req, res) {
     res.render('hotels');
+});
+
+// Root Page
+myApp.get('/', function(req, res){
+    res.render('travel'); // No need to add .ejs extension to the command.
+});
+
+// Render the form
+myApp.get('/traveller_details', function(req, res) {
+    res.render('traveller_details');
+});
+
+// Handle traveller details form submission
+myApp.post('/traveller_details', [
+    check ('name', 'Name is required!').notEmpty(),
+    check ('email', 'Please enter a valid email address!').isEmail(),
+    check ('phone', '').custom(customPhoneValidation),
+    // check ('lunch').custom(customLunchAndTicketValidations)
+],function(req, res){
+
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty())
+    {
+        res.render('traveller_details', {errors : errors.array()});
+    }
+
+    else 
+    {
+		// No errors
+        var name = req.body.name;
+        var email = req.body.email;
+        var phone = req.body.phone;
+        var interest = req.body.interest;
+        
+        var pageData = {
+            name : name, 
+            email : email,
+            phone : phone,
+            interest : interest,
+        };
+
+        // Save the form data into Database
+        var myOrder = new Order(pageData);
+        myOrder.save().then(function() {
+            console.log("Traveller details added!");
+            res.render('traveller_details', { successMsg: 'Your Details are submitted. We will contact you shortly.' });
+        }).catch(function (x) {
+            console.log(`Error: ${x}`);
+            res.render('traveller_details', { errors: [{ msg: 'An error occurred while saving the form data.' }] });
+        });
+        
+    }
+});
+
+// Handle blogger registration form submission
+myApp.post('/blogger_registration', [
+    check ('b_name', 'Name is required!').notEmpty(),
+    check ('b_username', 'Username is required!').notEmpty(),
+    check ('b_password', 'Password is required!').notEmpty()
+],function(req, res){
+
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty())
+    {
+        res.render('Blogger_registration', {errors : errors.array()});
+    }
+
+    else 
+    {
+		// No errors
+        var name = req.body.b_name;
+        var username = req.body.b_username;
+        var password = req.body.b_password;
+        
+        var pageData = {
+            name : name, 
+            username : username,
+            password : password,
+        };
+
+        // Save the form data into Database
+        var myBlogger = new Blogger(pageData);
+        myBlogger.save().then(function() {
+            console.log("Blogger details added!");
+            res.render('Blogger_registration', { successMsg: 'Your account is created. Please try login.' });
+        }).catch(function (x) {
+            console.log(`Error: ${x}`);
+            res.render('Blogger_registration', { errors: [{ msg: 'An error occurred while saving the form data.' }] });
+        });
+        
+    }
 });
 
 

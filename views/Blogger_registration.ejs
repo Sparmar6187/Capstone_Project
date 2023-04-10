@@ -13,7 +13,7 @@
 
         <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" >
             
-            <input id="name" placeholder="First Last" type="text" name="name" class="box"><br/>
+            <input id="b_name" placeholder="First Last" type="text" name="b_name" class="box"><br/>
 
             
             <input id="b_username" placeholder="enter your username" type="text" name="b_username" class="box"><br/>
@@ -25,6 +25,17 @@
             <input type="submit" value="Submit" class="btn">
       <p id="errors"></p>
     </form>  
+    <% 
+if (typeof(successMsg) != 'undefined')
+{
+%>
+
+    <p class="success"> <%= successMsg %><br></p>
+<%
+}
+%>
+
+
     <% 
     if (typeof(errors) != 'undefined')
     {
