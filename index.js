@@ -31,6 +31,15 @@ const Admin = mongoose.model('Admin', {
     password: String
 });
 
+const Review= mongoose.model('user_review', {
+    name : String, 
+    email : String,
+    phone : String,
+    interest : String,
+    star : String
+});
+
+
 const Blogger = mongoose.model('Blogger', {
     name:String,
     username: String,
@@ -231,6 +240,48 @@ myApp.post('/blogger_registration', [
             res.render('Blogger_registration', { errors: [{ msg: 'An error occurred while saving the form data.' }] });
         });
         
+    }
+});
+
+myApp.post('/user_review', [
+    check('name', 'Name is required!').notEmpty(),
+    check('email', 'Email is required!').notEmpty().isEmail(),
+    check('phone', 'Phone number is required!').notEmpty(),
+    check('interest', 'Interest is required!').notEmpty(),
+    check('star', 'Star rating is required!').notEmpty()
+], function(req, res) {
+
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty()) {
+        res.render('review', { errors: errors.array() });
+    } else {
+        // No errors
+        var name = req.body.name;
+        var email = req.body.email;
+        var phone = req.body.phone;
+        var interest = req.body.interest;
+        var star = req.body.star;
+
+        var reviewData = {
+            name: name,
+            email: email,
+            phone: phone,
+            interest: interest,
+            star: star
+        };
+
+        // Save the review data into Database
+        var myReview = new Review(reviewData);
+        myReview.save().then(function() {
+            console.log("Review added!");
+            res.render('user_review', { successMsg: 'Your review is submitted.' });
+        }).catch(function(x) {
+            console.log(`Error: ${x}`);
+            res.render('user_review', { errors: [{ msg: 'An error occurred while saving the review data.' }] });
+        });
+
     }
 });
 

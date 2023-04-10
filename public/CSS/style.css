@@ -506,7 +506,29 @@ header .fa-bars{
     header .fa-bars{
         display: block;
     }
+.stars {
+  display: inline-block;
+}
 
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  font-size: 30px;
+  color: #ddd;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+  color: #ffdf00;
+}
+
+    
+    
+    
+    
     header .navbar{
         position:absolute;
         top:100%; left:0; right:0;
