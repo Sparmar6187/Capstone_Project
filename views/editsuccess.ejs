@@ -1,5 +1,4 @@
-<%- include('layouts/header'); -%>
-<%- include('layouts/nav'); -%>
+
 <body>
 
 <!-- review  ends -->
@@ -8,32 +7,26 @@
 
 
 
-  <div class="content">
-      <h3>Travelling is a Therapy</h3>
-      <span> Natural & Beautiful Places </span>
-      <p></p>
-      <a href="/traveller_details" class="btn">What are your interests?</a>
-  </div>
 
 
 
 <section class="contact" id="contact">
 
-    <h1 class="heading"> <span> A new Destination </span> Added</h1>
+    <h1 class="heading" style="text-align: center; margin-bottom: 30px;"> <span style="color: #4CAF50;"> A new Destination </span> Added</h1>
 
     <div class="row">
 
-        <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" >
+        <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" style="display: flex; flex-direction: column;">
             
-            <input id="name" placeholder="First Last" type="text" name="name" class="box" value="<%= des_name %> "><br/>
-
+            <label for="name" style="margin-bottom: 10px;">Name:</label>
+            <input id="name" placeholder="First Last" type="text" name="name" class="box" value="<%= des_name %>" style="margin-bottom: 20px; padding: 10px;">
             
-            <input id="email" placeholder="email@domain.com" type="text" name="email" class="box" value="<%= des_price %> "><br/>
-
+            <label for="email" style="margin-bottom: 10px;">Email:</label>
+            <input id="email" placeholder="email@domain.com" type="text" name="email" class="box" value="<%= des_price %>" style="margin-bottom: 20px; padding: 10px;">
         
-            <input type="submit" value="Ok" class="btn">
-      <p id="errors"></p>
-    </form>  
+            <input type="submit" value="Ok" class="btn" style="padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; text-decoration: none; display: inline-block;">
+            <p id="errors" style="color: red;"></p>
+        </form>  
     <% 
     if (typeof(errors) != 'undefined')
     {
@@ -41,7 +34,7 @@
       {
     %>
 
-        <p class="errors"> <%= error.msg %><br></p>
+        <p class="errors" style="color: red;"> <%= error.msg %><br></p>
     <%
       }
     }

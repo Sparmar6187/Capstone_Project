@@ -1,0 +1,71 @@
+
+<body>
+  
+
+
+
+<!-- review  ends -->
+
+<!-- contact  starts  -->
+
+<section class="contact" id="contact" style="background-color: gray; padding: 20px; margin-bottom: 20px;">
+    <h1 class="heading" style="text-align: center; margin-bottom: 20px;"> <span style="color: white;"> Update Traveller </span> Details </h1>
+    <div class="row">
+        <form name="myform" method="Post" onsubmit="return formSubmit();" action="" style="display: flex; flex-direction: column;">
+            <label for="des_name" style="margin-bottom: 10px; font-weight: bold;">Destination:</label>
+            <input id="des_name" type="text" name="des_name" value="<%= order.des_name %>" class="box" style="margin-bottom: 20px; padding: 10px;">
+            <label for="des_price" style="margin-bottom: 10px; font-weight: bold;">Price:</label>
+            <input id="des_price" type="text" name="des_price" value="<%= order.des_price %>" class="box" style="margin-bottom: 20px; padding: 10px;">
+            <input type="submit" value="Submit" class="btn" style="padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+            <p id="errors" style="color: red;"></p>
+    </form>
+    
+    
+    
+    
+    
+    <% 
+if (typeof(successMsg) != 'undefined')
+{
+%>
+
+    <p class="success"> <%= successMsg %><br></p>
+<%
+}
+%>
+
+
+    <% 
+    if (typeof(errors) != 'undefined')
+    {
+      for (let error of errors)
+      {
+    %>
+
+        <p class="errors"> <%= error.msg %><br></p>
+    <%
+      }
+    }
+     %> 
+        <!-- <div class="image">
+            <img src="css/images/contact-img.svg" alt="">
+        </div> -->
+
+    </div>
+
+</section>
+
+
+
+
+<!-- contact section ends -->
+
+
+
+<!-- footer section starts  -->
+<%- include('layouts/footer'); -%>
+
+<!-- footer section ends -->
+
+</body>
+</html>

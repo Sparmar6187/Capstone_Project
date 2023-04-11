@@ -471,6 +471,11 @@ myApp.get('/Blogger_registration', function(req, res) {
 });
 
 
+myApp.get('/update_destination', function(req, res) {
+    res.render('update_destination');
+});
+
+
 // Login Page
 myApp.post('/login', function(req,res) {
     var user = req.body.username;
@@ -586,7 +591,7 @@ myApp.post('/destinations/:id', [], function(req, res) {
 
 
 // Edit/Update Page
-myApp.get('/edit/:id', (req,res) => {
+myApp.get('/update_destination/:id', (req,res) => {
     // Check if session exists.
     if (req.session.userLoggedIn)
     {
@@ -597,7 +602,7 @@ myApp.get('/edit/:id', (req,res) => {
             console.log(`Error: ${err}`);
             console.log(`Order: ${order}`);
             if (order)
-                res.render('edit', {order : order});
+                res.render('update_destination', {order : order});
             else
                 res.send ('No data found with this id....!');
         });
@@ -610,7 +615,7 @@ myApp.get('/edit/:id', (req,res) => {
 
 
 // Edit Page - Post Method
-myApp.post('/edit/:id', [], function(req, res) {
+myApp.post('/update_destination/:id', [], function(req, res) {
     // check for errors
     const errors = validationResult(req);
     console.log(errors);
@@ -623,7 +628,7 @@ myApp.post('/edit/:id', [], function(req, res) {
             console.log(`Error: ${err}`);
             console.log(`Destination: ${dest}`);
             if (dest)
-                res.render('edit', { destination: dest, errors: errors.array() });
+                res.render('update_destination', { destination: dest, errors: errors.array() });
             else
                 res.send('No destination found with this id....!');
         });
