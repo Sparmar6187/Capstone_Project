@@ -1,41 +1,34 @@
-
 <%- include('layouts/header'); -%>
+<%- include('layouts/nav'); -%>
+
 <body>
-    <%- include('layouts/nav'); -%>
-  <section class="contact">
-    <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" >
-      <label>Destination</label>
-      <input id="des_name" placeholder="destination" type="text" name="des_name" value="<%= order.des_name %>"><br/>
 
-      <label>Price</label>
-      <input id="des_price" placeholder="price" type="text" name="des_price"  value="<%= order.des_price %>"><br/>
+  <section class="contact" id="contact">
 
-      
-      <br/><br/>
-      <input type="submit" value="Update">
-      <p id="errors">
-        <% 
-      if (typeof(errors) != 'undefined')
-      {
-        for (let error of errors)
-        {
-    %>
+    <h1 class="heading"> <span> Traveller </span> Details Updated </h1>
+    <div class="row">
+
+      <form name="myform" method="Post" onsubmit="return formSubmit();" action="">
+        <input id="des_name" placeholder="destination" type="text" name="des_name" value="<%= order.des_name %>" class="box"><br/>
+        <input id="des_price" placeholder="price" type="text" name="des_price"  value="<%= order.des_price %>" class="box"><br/>
+        <input type="submit" value="Submit" class="btn">
+      </form>
+      <% if (typeof(successMsg) != 'undefined') { %>
+        <p class="success"> <%= successMsg %><br></p>
+      <% } %>
+      <% if (typeof(errors) != 'undefined') { %>
+        <% for (let error of errors) { %>
           <p class="errors"> <%= error.msg %></p>
-    <%
-        }
-      }
-    %>
-      </p>
-    </form>  
-</section>
-<div class="clear"></div>
+        <% } %>
+      <% } %>
+    </div>
+  </section>
+  <div class="clear"></div>
 </body>
-
-
+<!-- contact section ends -->
 <!-- footer section starts  -->
 <%- include('layouts/footer'); -%>
-
 <!-- footer section ends -->
-
-</body>
 </html>
+
+
