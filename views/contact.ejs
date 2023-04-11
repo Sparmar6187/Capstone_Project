@@ -2,25 +2,18 @@
 <%- include('layouts/nav'); -%>
 <body>
   
+
+
+
 <!-- review  ends -->
 
 <!-- contact  starts  -->
 
-<div class="content">
-    <h3>Travelling is a Therapy</h3>
-    <span> Natural & Beautiful Places </span>
-    <p></p>
-    <a href="/traveller_details" class="btn">What are your interests?</a>
-</div>
-
-
-
-
 <section class="contact" id="contact">
 
-    <h1 class="heading"> <span> User  </span> Review </h1>
+    <h1 class="heading"> <span> Contact </span> Details </h1>
 
-    <div class="row">        
+    <div class="row">
 
         <form name="myform" method="Post" onsubmit="return formSubmit();"  action="" >
             
@@ -33,11 +26,11 @@
             <input id="phone" placeholder="123-123-1234" type="phone" name="phone" class="box"><br/>
 
             
-            <input id="interest" placeholder="reviews and feedback" type="text" name="interest" class="box"><br/>
-              
+            <input id="message" placeholder="enter your interest" type="text" name="message" class="box"><br/>
+
             <input type="submit" value="Submit" class="btn">
       <p id="errors"></p>
-    </form>  
+    </form> 
     <% 
 if (typeof(successMsg) != 'undefined')
 {
@@ -61,20 +54,6 @@ if (typeof(successMsg) != 'undefined')
       }
     }
      %> 
-   
-
-     <script>
-        const stars = document.querySelectorAll(".stars input[type='radio']");
-        const labels = document.querySelectorAll(".stars label");
-  
-        stars.forEach(star => {
-          star.addEventListener('change', (e) => {
-            const rating = e.target.value;
-            console.log(`You rated this ${rating} stars.`);
-          });
-        });
-      </script>
-  
         <!-- <div class="image">
             <img src="css/images/contact-img.svg" alt="">
         </div> -->

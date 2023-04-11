@@ -17,7 +17,14 @@ const Order = mongoose.model('Travellers',{
     name : String, 
     email : String,
     phone : String,
-    interest : String
+    message : String
+});
+
+const User = mongoose.model('Users',{
+    name : String, 
+    email : String,
+    phone : String,
+    message : String
 });
 
 // Setup Database Model
@@ -35,8 +42,7 @@ const Review= mongoose.model('user_review', {
     name : String, 
     email : String,
     phone : String,
-    interest : String,
-    star : String
+    interest : String
 });
 
 
@@ -148,6 +154,10 @@ myApp.get('/hotels', function(req, res) {
     res.render('hotels');
 });
 
+myApp.get('/contact', function(req, res) {
+    res.render('contact');
+});
+
 // Root Page
 myApp.get('/', function(req, res){
     res.render('travel'); // No need to add .ejs extension to the command.
@@ -202,6 +212,50 @@ myApp.post('/traveller_details', [
     }
 });
 
+myApp.post('/travel', [
+    check ('name', 'Name is required!').notEmpty(),
+    check ('email', 'Please enter a valid email address!').isEmail(),
+    check ('phone', '').custom(customPhoneValidation),
+    // check ('lunch').custom(customLunchAndTicketValidations)
+],function(req, res){
+
+    const errors = validationResult(req);
+    console.log(errors);
+
+    if (!errors.isEmpty())
+    {
+        res.render('travel', {errors : errors.array()});
+    }
+
+    else 
+    {
+		// No errors
+        var name = req.body.name;
+        var email = req.body.email;
+        var phone = req.body.phone;
+        var message = req.body.message;
+        
+        var pageData = {
+            name : name, 
+            email : email,
+            phone : phone,
+            message : message,
+        };
+
+        // Save the form data into Database
+        var myUser = new User(pageData);
+        myUser.save().then(function() {
+            console.log("User details added!");
+            res.render('travel', { successMsg: 'Your Details are submitted. We will contact you shortly.' });
+        }).catch(function (x) {
+            console.log(`Error: ${x}`);
+            res.render('travel', { errors: [{ msg: 'An error occurred while saving the form data.' }] });
+        });
+        
+    }
+});
+
+
 // Handle blogger registration form submission
 myApp.post('/blogger_registration', [
     check ('b_name', 'Name is required!').notEmpty(),
@@ -247,29 +301,27 @@ myApp.post('/user_review', [
     check('name', 'Name is required!').notEmpty(),
     check('email', 'Email is required!').notEmpty().isEmail(),
     check('phone', 'Phone number is required!').notEmpty(),
-    check('interest', 'Interest is required!').notEmpty(),
-    check('star', 'Star rating is required!').notEmpty()
+    check('interest', 'Interest is required!').notEmpty()
 ], function(req, res) {
 
     const errors = validationResult(req);
     console.log(errors);
 
     if (!errors.isEmpty()) {
-        res.render('review', { errors: errors.array() });
+        res.render('user_review', { errors: errors.array() });
     } else {
         // No errors
         var name = req.body.name;
         var email = req.body.email;
         var phone = req.body.phone;
         var interest = req.body.interest;
-        var star = req.body.star;
 
         var reviewData = {
             name: name,
             email: email,
             phone: phone,
             interest: interest,
-            star: star
+    
         };
 
         // Save the review data into Database
